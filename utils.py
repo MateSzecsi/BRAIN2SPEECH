@@ -25,4 +25,4 @@ def filter_silence(u, y, silence_treshold=0.5):
     u_filtered[i, :] = u[index, :]
     y_filtered[i, :] = y[index, :]
 
-  return u, y
+  return u_filtered, y_filtered
