@@ -50,9 +50,10 @@ def generate_datasets(pt, feat_path=r'./features'):
 
     return (X_train, Y_train, X_val, Y_val, X_test, Y_test)
 
-def filter_silence(u, y, silence_treshold=0.5):
+def filter_silence(u, y, silence_treshold=450):
   r"""
-  filters out silence in output arry, and corresponding datapoints in the input array
+  filters out silence in output array, and corresponding datapoints in the input array
+  based on the energy of the signal
   param u: input array
   param y: output array
   param silence_treshold: if the sum the amplitudes of the frequency componenets are
@@ -60,9 +61,7 @@ def filter_silence(u, y, silence_treshold=0.5):
   """
   nonsilence_indexes = []
   for i in range(y.shape[0]):
-    if np.sum(y[i]) > silence_treshold:
-      # if i>300 and i<500:
-      #   print(np.mean(y[i]), flush=True)
+    if np.sum(y[i]**2) > silence_treshold:
       nonsilence_indexes.append(i)
 
   u_filtered = np.zeros((len(nonsilence_indexes), u.shape[1]))
