@@ -10,14 +10,14 @@ def download_file(url, filename):
   response = requests.get(url)
   open(filename, "wb").write(response.content)
     
-def download_data():
+def download_data(download_scripts=True):
   
-    
-    download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/extract_features.py", filename="extract_features.py")
-    download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/MelFilterBank.py", filename="MelFilterBank.py")
-    download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/viz_results.py", filename="viz_results.py")
-    download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/reconstruction_minimal.py", filename="reconstruction_minimal.py")
-    download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/reconstructWave.py", filename="reconstructWave.py")
+    if download_scripts:
+      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/extract_features.py", filename="extract_features.py")
+      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/MelFilterBank.py", filename="MelFilterBank.py")
+      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/viz_results.py", filename="viz_results.py")
+      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/reconstruction_minimal.py", filename="reconstruction_minimal.py")
+      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/reconstructWave.py", filename="reconstructWave.py")
     download_file("https://files.de-1.osf.io/v1/resources/nrgx6/providers/osfstorage/623d9d9a938b480e3797af8f", "data.zip")
     
     zipfile.ZipFile("data.zip", 'r').extractall("")
@@ -27,6 +27,8 @@ def generate_datasets(pt, feat_path=r'./features'):
     data = np.load(os.path.join(feat_path,f'{pt}_feat.npy'))
     labels = np.load(os.path.join(feat_path,f'{pt}_procWords.npy'))
     featName = np.load(os.path.join(feat_path,f'{pt}_feat_names.npy'))
+
+    data, spectrogram = filter_silence(u=data, y=spectrogram)
     
     # Generate train, validation and test datasets
     X_train, X_testval, Y_train, y_testval = train_test_split(data, spectrogram, test_size=0.3)
@@ -59,6 +61,8 @@ def filter_silence(u, y, silence_treshold=0.5):
   nonsilence_indexes = []
   for i in range(y.shape[0]):
     if np.sum(y[i]) > silence_treshold:
+      # if i>300 and i<500:
+      #   print(np.mean(y[i]), flush=True)
       nonsilence_indexes.append(i)
 
   u_filtered = np.zeros((len(nonsilence_indexes), u.shape[1]))

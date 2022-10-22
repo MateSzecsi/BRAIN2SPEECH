@@ -77,7 +77,7 @@ if __name__=="__main__":
     # Viz example spectrogram
     #Load words and spectrograms
     feat_path = r'./features'
-    participant = 'sub-06'
+    participant = 'sub-01'
     #Which timeframe to plot
     start_s = 5.5
     stop_s=19.5
