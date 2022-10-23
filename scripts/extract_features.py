@@ -10,7 +10,7 @@ import scipy.io.wavfile
 import scipy.fftpack
 
 from pynwb import NWBHDF5IO
-import MelFilterBank as mel
+from scripts import MelFilterBank as mel
 
 #Small helper function to speed up the hilbert transform by extending the length of data to the next power of 2
 hilbert3 = lambda x: scipy.signal.hilbert(x, scipy.fftpack.next_fast_len(len(x)),axis=0)[:len(x)]

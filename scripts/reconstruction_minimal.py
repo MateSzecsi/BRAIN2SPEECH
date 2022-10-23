@@ -46,7 +46,7 @@ def createAudio(spectrogram, audiosr=16000, winLength=0.05, frameshift=0.01):
 if __name__=="__main__":
     feat_path = r'./features'
     result_path = r'./results'
-    pts = ['sub-%02d'%i for i in range(1,3)]
+    pts = ['sub-%02d'%i for i in range(1,11)]
 
     winLength = 0.05
     frameshift = 0.01

@@ -2,33 +2,37 @@ import requests
 import numpy as np
 import glob
 import os
+import shutil
 import zipfile
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 
 def download_file(url, filename):
+  r"""
+    Download file from the url.
+    param url: URL of the file that we have to download.
+    param filename: name of the file that will be save to local.
+   """
+    
   response = requests.get(url)
   open(filename, "wb").write(response.content)
     
-def download_data(download_scripts=True):
-  
-    if download_scripts:
-      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/extract_features.py", filename="extract_features.py")
-      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/MelFilterBank.py", filename="MelFilterBank.py")
-      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/viz_results.py", filename="viz_results.py")
-      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/reconstruction_minimal.py", filename="reconstruction_minimal.py")
-      download_file(url="https://raw.githubusercontent.com/neuralinterfacinglab/SingleWordProductionDutch/main/reconstructWave.py", filename="reconstructWave.py")
-    download_file("https://files.de-1.osf.io/v1/resources/nrgx6/providers/osfstorage/623d9d9a938b480e3797af8f", "data.zip")
-    
-    zipfile.ZipFile("data.zip", 'r').extractall("")
-    
 def generate_datasets(pt, feat_path=r'./features'):
+    
+    r"""
+    Generate train, validation and test datasets from the one sample of the raw data.
+    This function also filter the datasets and remove silence from the dataset.
+    param pt: name of the sample
+    param feat_path: path of the raw data file
+  """
+    
     spectrogram = np.load(os.path.join(feat_path,f'{pt}_spec.npy'))
     data = np.load(os.path.join(feat_path,f'{pt}_feat.npy'))
     labels = np.load(os.path.join(feat_path,f'{pt}_procWords.npy'))
     featName = np.load(os.path.join(feat_path,f'{pt}_feat_names.npy'))
-
-    data, spectrogram = filter_silence(u=data, y=spectrogram)
+    
+    #Filter silence data from the datasets
+    data, spectrogram = filter_silence(data, spectrogram)
     
     # Generate train, validation and test datasets
     X_train, X_testval, Y_train, y_testval = train_test_split(data, spectrogram, test_size=0.3)
@@ -72,5 +76,3 @@ def filter_silence(u, y, silence_treshold=450):
     y_filtered[i, :] = y[index, :]
 
   return u_filtered, y_filtered
-
-
