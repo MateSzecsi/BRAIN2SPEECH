@@ -13,9 +13,9 @@ This repository contains the BRAIN2SPEECH Home assigment that was created for th
 
 ## Main files
 
-- [data_prepare.py](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/milestone1/kborko/data_prepare.py) : This file contains helper methods for data preparation. 
-- [Hf1_MS1.ipynb](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/milestone1/kborko/HF_MS1.ipynb)   : This Jupyter notebook download the data from the server and create train, validation and test datasets from it.
-- [./scripts](https://github.com/MateSzecsi/BRAIN2SPEECH/tree/milestone1/kborko/scripts)       : This directory contains scripts that was created by NeuralinterfacingLab. We used it for data extraction.
+- [data_prepare.py](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/main/data_prepare.py) : This file contains helper methods for data preparation. 
+- [Hf1_MS1.ipynb](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/main/HF_MS1.ipynb)   : This Jupyter notebook download the data from the server and create train, validation and test datasets from it.
+- [./scripts](https://github.com/MateSzecsi/BRAIN2SPEECH/tree/main/scripts)       : This directory contains scripts that was created by NeuralinterfacingLab. We used it for data extraction.
 
 ## Running Enviroment
 
