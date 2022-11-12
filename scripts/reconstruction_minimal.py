@@ -7,8 +7,8 @@ from sklearn.model_selection import KFold
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LinearRegression
 
-import reconstructWave as rW
-import MelFilterBank as mel
+import scripts.reconstructWave as rW
+import scripts.MelFilterBank as mel
 
 
 def createAudio(spectrogram, audiosr=16000, winLength=0.05, frameshift=0.01):

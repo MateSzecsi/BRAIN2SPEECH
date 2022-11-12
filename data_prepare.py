@@ -31,26 +31,31 @@ def generate_datasets(pt, feat_path=r'./features'):
     labels = np.load(os.path.join(feat_path,f'{pt}_procWords.npy'))
     featName = np.load(os.path.join(feat_path,f'{pt}_feat_names.npy'))
     
-    #Filter silence data from the datasets
-    data, spectrogram = filter_silence(data, spectrogram)
-    
-    # Generate train, validation and test datasets
-    X_train, X_testval, Y_train, y_testval = train_test_split(data, spectrogram, test_size=0.3)
-    X_val, X_test, Y_val, Y_test = train_test_split(X_testval, y_testval, test_size=0.66)
-
     # Standardize data
-    mu = np.mean(X_train, axis=0)
-    std = np.std(X_train, axis=0)
-    X_train = (X_train-mu)/std
-    X_test = (X_test-mu)/std
-    X_val = (X_val-mu)/std
-
+    mu = np.mean(data, axis=0)
+    std = np.std(data, axis=0)
+    data = (data-mu)/std
+    
     # Reduce Dimensions
     pca = PCA()
-    pca.fit(X_train)
-    X_train = np.dot(X_train, pca.components_[:50,:].T)
-    X_test = np.dot(X_test, pca.components_[:50,:].T)
-    X_val = np.dot(X_val, pca.components_[:50,:].T)
+    pca.fit(data)
+    data = np.dot(data, pca.components_[:50,:].T)
+
+    #Filter silence data from the datasets
+    # data, spectrogram = filter_silence(data, spectrogram)
+
+    # Creating data for CNN: stacking window_size input data and connecting it to the output
+    # at the end of the window
+    window_size = 4
+    input = np.zeros((data.shape[0] - window_size, window_size, data.shape[1]))
+    output = np.zeros((spectrogram.shape[0] - window_size, spectrogram.shape[1]))
+    for i in range(data.shape[0] - window_size):
+      output[i, :] = spectrogram[i + window_size, :]
+      input[i, :, :] = data[i:i+window_size, :]
+
+    # Generate train, validation and test datasets
+    X_train, X_testval, Y_train, y_testval = train_test_split(input, output, test_size=0.3)
+    X_val, X_test, Y_val, Y_test = train_test_split(X_testval, y_testval, test_size=0.66)
 
     return (X_train, Y_train, X_val, Y_val, X_test, Y_test)
 
