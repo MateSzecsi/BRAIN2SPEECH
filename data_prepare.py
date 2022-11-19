@@ -7,6 +7,7 @@ import zipfile
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 
+
 def download_file(url, filename):
   r"""
     Download file from the url.
@@ -81,3 +82,41 @@ def filter_silence(u, y, silence_treshold=450):
     y_filtered[i, :] = y[index, :]
 
   return u_filtered, y_filtered
+
+
+def download_and_prepare_data():
+    
+    r"""
+      Download the dataset and prepare it for learning. This function execute the data preparation tasks that we created during the last part of the home assignment.
+  """
+    
+    # Download the data and extract it
+    download_file("https://files.de-1.osf.io/v1/resources/nrgx6/providers/osfstorage/623d9d9a938b480e3797af8f", "data.zip")
+    zipfile.ZipFile("data.zip", 'r').extractall("")
+    # Run script to take various steps to extract the useful features of the downloaded data
+    execfile("scripts/extract_features.py")
+    
+    # Get lists of samples
+    pts = ['sub-%02d'%i for i in range(1,11)]
+    # New list for the prepared datasets
+    prepared_data = []
+    
+    # Prepare data from all sample for deep learning
+    # In addition to the previous data preparation steps, we also filter out the silence
+    for pt in pts:
+        #Prepare data for learning
+        (X_train, Y_train, X_val, Y_val, X_test, Y_test) = generate_datasets(pt)
+        prepared_data.append((X_train, Y_train, X_val, Y_val, X_test, Y_test))
+        
+    data = {}
+    for i, key in enumerate(["Xtrain", "Ytrain", "Xvalid", "Yvalid", "Xtest", "Ytest"]):
+        data[key] = np.array(prepared_data[0][i])
+    for i in range(1, len(prepared_data), 1):
+        for j, key in enumerate(data.keys()):
+            data[key] = np.concatenate([data[key], prepared_data[i][j]], axis=0)
+        
+    return data
+
+
+
+
