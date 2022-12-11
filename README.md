@@ -14,10 +14,12 @@ This repository contains the BRAIN2SPEECH Home assigment that was created for th
 ## Main files
 
 - [data_prepare.py](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/main/data_prepare.py) : This file contains helper methods for data preparation. 
-- [HF_MS1.ipynb](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/main/HF_MS1.ipynb)   : This Jupyter notebook download the data from the server and create train, validation and test datasets from it.
-- [HF_MS2.ipynb](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/main/HF_MS2.ipynb): This notebook create a simple CNN network, trainning this network and evaluate it using MAE metrics
+- [HF_MS1.ipynb](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/main/HF_MS1.ipynb)   : This Jupyter notebook downloads the data from the server and create train, validation and test datasets from it.
+- [HF_MS2.ipynb](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/main/HF_MS2.ipynb): This Jupyter notebook creates a simple CNN network, trainning this network and evaluate it using MAE metrics
+- [HF_separate_models.ipynb](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/main/HF_separate_models.ipynb) :This Jupyter notebook contains the final models.
 - [./scripts](https://github.com/MateSzecsi/BRAIN2SPEECH/tree/main/scripts)       : This directory contains scripts that was created by NeuralinterfacingLab. We used it for data extraction.
-
+- [./audio](https://github.com/MateSzecsi/BRAIN2SPEECH/tree/main/audio) : This directory contains the synthesized audio files.
+- [./logs](https://github.com/MateSzecsi/BRAIN2SPEECH/tree/main/logs) :This directory contains the logs of previous models.
 ## Running Enviroment
 
 System requiments for running the scripts and notebook:
