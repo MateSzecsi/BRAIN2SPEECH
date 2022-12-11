@@ -11,7 +11,7 @@ This repository contains the BRAIN2SPEECH Home assigment that was created for th
 | Szécsi Máté           | mate.szecsi@edu.bme.hu  |GPDH3C |
 | Fodor Milán András    | milanfodor@edu.bme.hu   |X3EI7I |
 
-## Running Enviromen
+## Running environment
 
 System requiments for running the scripts and notebook:
 - Python 3.10.5
