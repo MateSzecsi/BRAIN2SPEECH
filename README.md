@@ -19,7 +19,7 @@ This repository contains the BRAIN2SPEECH Home assigment that was created for th
 - [HF_separate_models.ipynb](https://github.com/MateSzecsi/BRAIN2SPEECH/blob/main/HF_separate_models.ipynb) :This Jupyter notebook contains the final models.
 - [./scripts](https://github.com/MateSzecsi/BRAIN2SPEECH/tree/main/scripts)       : This directory contains scripts that was created by NeuralinterfacingLab. We used it for data extraction.
 - [./audio](https://github.com/MateSzecsi/BRAIN2SPEECH/tree/main/audio) : This directory contains the synthesized audio files.
-- [./logs](https://github.com/MateSzecsi/BRAIN2SPEECH/tree/main/logs) :This directory contains the logs of previous models.
+- [./logs](https://github.com/MateSzecsi/BRAIN2SPEECH/tree/main/logs) :This directory contains the logs of tested models.
 ## Running Enviroment
 
 System requiments for running the scripts and notebook:
